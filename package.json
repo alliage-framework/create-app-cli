@@ -1,6 +1,6 @@
 {
   "name": "@alliage/create-app-cli",
-  "version": "0.0.0",
+  "version": "1.0.0-beta.1",
   "description": "CLI to create Alliage applications",
   "repository": "https://github.com/alliage-framework/create-app-cli.git",
   "author": "Boris Lebon <bo.lebon@gmail.com>",
