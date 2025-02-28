@@ -2,6 +2,7 @@
 
 import path from "path";
 import { execSync } from "child_process";
+import os from 'os';
 
 import yargs from "yargs";
 import simpleGit from 'simple-git';
@@ -65,7 +66,7 @@ async function main() {
           })
           .option("tempDir", {
             type: "string",
-            default: "/tmp/create-alliage-app",
+            default: path.join(os.tmpdir(), 'create-alliage-app'),
           });
       }
     )
