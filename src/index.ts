@@ -4,7 +4,7 @@ import path from "path";
 import { execSync } from "child_process";
 
 import yargs from "yargs";
-import { Clone } from "nodegit";
+import simpleGit from 'simple-git';
 import fs from "fs-extra";
 import commandExists from "command-exists";
 
@@ -19,8 +19,23 @@ type Args = {
 async function installDeps(path: string) {
   const currentCwd = process.cwd();
   process.chdir(path);
-  const command = (await commandExists("yarn")) ? "yarn" : "npm";
-  execSync(`${command} install`, { stdio: "inherit" });
+  
+  // Check for different package managers in order of preference
+  const packageManagers = ['yarn', 'bun', 'pnpm', 'npm'];
+  let selectedManager = 'npm'; // default fallback
+
+  for (const manager of packageManagers) {
+    try {
+      if (await commandExists(manager)) {
+        selectedManager = manager;
+        break;
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  execSync(`${selectedManager} install`, { stdio: "inherit" });
   process.chdir(currentCwd);
 }
 
@@ -62,12 +77,15 @@ async function main() {
   // Remove temp directory where distributions are stored
   await fs.remove(tempDir);
 
+  // Create temp directory
+  await fs.ensureDir(tempDir);
+
   // Clone dists repository
-  // @ts-ignore
-  const repo = await Clone.clone(repoUrl, tempDir, { checkoutBranch: branch });
+  const git = simpleGit();
+  await git.clone(repoUrl, tempDir, ['--branch', branch]);
 
   // Check if dist exists
-  const distPath = path.resolve(repo.workdir(), dist);
+  const distPath = path.resolve(tempDir, dist);
   if (!(await fs.pathExists(distPath))) {
     throw new Error(`${dist} does not exist.`);
   }
@@ -76,7 +94,7 @@ async function main() {
   await fs.copy(distPath, directory);
 
   // Copy common files if they exists
-  const commonDir = `${repo.workdir()}/.common`;
+  const commonDir = path.join(tempDir, '.common');
   if (fs.existsSync(commonDir)) {
     fs.copySync(commonDir, directory);
   }
