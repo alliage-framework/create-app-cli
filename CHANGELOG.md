@@ -1,3 +1,10 @@
+# [1.0.0-beta.2](https://github.com/alliage-framework/create-app-cli/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2025-02-28)
+
+
+### Bug Fixes
+
+* replace nodegit with simple-git ([#2](https://github.com/alliage-framework/create-app-cli/issues/2)) ([a451bb5](https://github.com/alliage-framework/create-app-cli/commit/a451bb5af1e8d095e86abc674397422bef488de2))
+
 # 1.0.0-beta.1 (2023-06-09)
 
 
