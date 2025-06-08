@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/alliage-framework/create-app-cli/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2025-06-08)
+
+
+### Bug Fixes
+
+* make it work on windows ([#3](https://github.com/alliage-framework/create-app-cli/issues/3)) ([3ea9aea](https://github.com/alliage-framework/create-app-cli/commit/3ea9aea849c01146fbd089b32eab2845a860dee8))
+
 # [1.0.0-beta.2](https://github.com/alliage-framework/create-app-cli/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2025-02-28)
 
 
